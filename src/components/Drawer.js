@@ -47,7 +47,7 @@ const onDragStart = (event, nodeType) => {
 export default function Drawer() {
     const { drawerOpen, toggleDrawerOpen } = useAppStore();
     const [dialogOpen, setDialogOpen] = useState(false);
-    const [tableOpen, setTableOpen] = useState(true);
+    const [tableOpen, setTableOpen] = useState(false);
     const { reset } = useRfStore();
 
     const handleReset = () => {
