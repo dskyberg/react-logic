@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 const useAppStore = create((set) => ({
-    drawerOpen: false,
+    drawerOpen: true,
     toggleDrawerOpen: (toggle) => set((state) => ({ drawerOpen: toggle })),
 }))
 export default useAppStore;
