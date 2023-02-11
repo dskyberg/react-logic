@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 import Button from '@mui/material/Button';
 import DialogTitle from '@mui/material/DialogTitle';
@@ -64,7 +64,6 @@ const TruthTable = ({ label, tfn }) => {
 
 export default function ConfirmationDialog(props) {
     const { open, onClose, ...other } = props;
-    const theme = useTheme();
 
     const handleOk = () => {
         onClose();

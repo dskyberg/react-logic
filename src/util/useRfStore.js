@@ -28,10 +28,6 @@ const initialState = {
     id: initialNodes.length + 1,
 };
 
-const deprecate_count = (val) => {
-    console.log('deprecate_count:', val);
-    return val > 0 ? val - 1 : 0
-};
 
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
 const useStore = create(
