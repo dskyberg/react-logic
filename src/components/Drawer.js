@@ -1,11 +1,10 @@
-import React, { useState, DragEvent } from 'react';
+import React, { useState } from 'react';
 
-import { useNodes, useReactFlow } from 'reactflow';
 import useRfStore from '../util/useRfStore';
 
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 
 import useAppStore from '../util/useAppStore';
@@ -46,10 +45,6 @@ const onDragStart = (event, nodeType) => {
 
 export default function Drawer() {
     const { drawerOpen, toggleDrawerOpen } = useAppStore();
-    const theme = useTheme();
-    const reactFlow = useReactFlow();
-    const nodes = useNodes();
-    const [id, setId] = useState(1);
     const [dialogOpen, setDialogOpen] = useState(false);
     const { reset } = useRfStore();
 

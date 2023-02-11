@@ -1,5 +1,5 @@
 
-import React, { useEffect, memo } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOMServer from "react-dom/server";
 import useRfStore from '../util/useRfStore';
 
@@ -8,37 +8,33 @@ import { css } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { Handle, Position, useReactFlow, useStoreApi } from 'reactflow';
+import { Handle, Position } from 'reactflow';
 import TargetHandle from './TargetHandle';
 
-const Svg = ({ bg, size }) => {
+const Svg = ({ bg }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <path fill={bg} stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="4"
-                d="M 0,2 C 45,0 45,100  0,98
-        C  80,98 60,98 85,50
-        C  60,2 80,2 0,2"
+                d="M 0,2 C 45,0 45,100  0,98 C  80,98 60,98 85,50 C  60,2 80,2 0,2"
             />
-            <circle fill={bg} stroke="black" strokeWidth="4"
-                cx="92" cy="50" r="6" />
-
+            <circle fill={bg} stroke="black" strokeWidth="4" cx="92" cy="50" r="6" />
         </svg>
-
     )
 }
 
 export default function NorNode({ id, data }) {
     const theme = useTheme();
 
-    const { sources, status } = data;
+    const { status } = data;
     const { setNodeStatus } = useRfStore();
 
     useEffect(() => {
-        const status = (sources.a === 'off' || sources.b === 'off') ? 'on' : 'off';
+        const { sources } = data;
+        const status = (sources.a.status === 'off' || sources.b.status === 'off') ? 'on' : 'off';
         if (status !== data.status) {
             setNodeStatus(id, status);
         }
-    }, [sources]);
+    }, [id, data, setNodeStatus]);
 
     // Create the SVG as a React component, with props, then
     // render it as a string.  This allows us to dynamically style

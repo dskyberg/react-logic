@@ -1,16 +1,11 @@
-import React, { memo, useState } from 'react';
 import ReactDOMServer from "react-dom/server";
 /** @jsxImportSource @emotion/react */
 import { css } from '@emotion/react';
 
-import { styled, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
-import { Handle, Position, useReactFlow, useStoreApi } from 'reactflow';
-import Typography from '@mui/material/Typography';
+import { Handle, Position } from 'reactflow';
 import Switch from '@mui/material/Switch';
-import IconButton from '@mui/material/IconButton';
-import ToggleOn from '@mui/icons-material/ToggleOn';
-import ToggleOff from '@mui/icons-material/ToggleOff';
 
 import useRfStore from '../util/useRfStore';
 
@@ -20,16 +15,14 @@ const Svg = ({ bg, size }) => {
             <circle fill={bg} stroke="black" strokeWidth="4" cx="50%" cy="50%" r="47%" />
         </svg>)
 }
-const handleStyle = { left: 10 };
 
-export default ({ id, data }) => {
+export default function SwitchNode({ id, data }) {
     const theme = useTheme();
-    const [handleStatus, setHandleStatus] = useState({ a: false, b: false });
     const { setNodeStatus } = useRfStore();
     const { status } = data;
 
     const handleClick = () => {
-        setNodeStatus(id, status == 'on' ? 'off' : 'on');
+        setNodeStatus(id, status === 'on' ? 'off' : 'on');
     }
 
     const bgColor = status === "off" ? 'none' : theme.palette.secondary.light;

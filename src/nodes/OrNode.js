@@ -1,5 +1,5 @@
 
-import React, { useEffect, memo } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOMServer from "react-dom/server";
 import useRfStore from '../util/useRfStore';
 
@@ -8,10 +8,11 @@ import { css } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { Handle, Position, useReactFlow, useStoreApi } from 'reactflow';
+import { Handle, Position } from 'reactflow';
 import TargetHandle from './TargetHandle';
+import { or_gate } from '../util/gates';
 
-const Svg = ({ bg, size }) => {
+const Svg = ({ bg }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
             <path fill={bg} stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="4"
@@ -23,16 +24,18 @@ const Svg = ({ bg, size }) => {
 
 export default function OrNode({ id, data }) {
     const theme = useTheme();
-
-    const { sources, status } = data;
     const { setNodeStatus } = useRfStore();
+    const { status } = data;
 
     useEffect(() => {
-        const status = (sources.a === 'on' || sources.b === 'on') ? 'on' : 'off';
+        console.log('OrNode', id, data);
+        const { sources } = data;
+
+        const status = or_gate(sources);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }
-    }, [sources]);
+    }, [id, data, setNodeStatus]);
 
     // Create the SVG as a React component, with props, then
     // render it as a string.  This allows us to dynamically style

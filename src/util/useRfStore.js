@@ -28,24 +28,6 @@ const initialState = {
     id: initialNodes.length + 1,
 };
 
-
-const calcStatusByType = (type, data) => {
-    switch (type) {
-        case 'and':
-            if (data.sources.a === 'on' && data.sources.b === 'on') {
-                return 'on'
-            }
-            return 'off';
-        case 'or':
-            if (data.sources.a === 'on' || data.sources.b === 'on') {
-                return 'on';
-            }
-            return 'off';
-        default:
-            return data.status;
-    }
-}
-
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
 const useStore = create(
     persist((set, get) => ({
@@ -66,18 +48,18 @@ const useStore = create(
         },
 
         setNodeStatus: (id, status) => {
-            let oldstatus = status;
+            let prev_status = status;
             set({
                 nodes: Array.from(get().nodes.values()).map((node) => {
                     if (node.id === id) {
-                        oldstatus = node.data.status;
+                        prev_status = node.data.status;
                         node.data.status = status
                     }
                     return node;
                 }),
             })
             // If the status actually changed, then update the connected nodes
-            if (oldstatus !== status) {
+            if (prev_status !== status) {
                 get().updateEdgeStatus(id, status);
             }
         },
@@ -111,7 +93,10 @@ const useStore = create(
                                 ...node.data,
                                 sources: {
                                     ...node.data.sources,
-                                    [e.targetHandle]: 'off',
+                                    [e.targetHandle]: {
+                                        edges: 0,
+                                        status: 'off',
+                                    }
                                 }
                             }
                         }
@@ -142,7 +127,10 @@ const useStore = create(
                                 ...node.data,
                                 sources: {
                                     ...node.data.sources,
-                                    [e.targetHandle]: status,
+                                    [e.targetHandle]: {
+                                        edges: 1,
+                                        status,
+                                    }
                                 }
                             }
                         }
@@ -153,7 +141,7 @@ const useStore = create(
         },
 
         _updateStatusOnConnect: (connection) => {
-            const { source, sourceHande, target, targetHandle } = connection;
+            const { source, targetHandle } = connection;
             let [sourceNode] = get().nodes.filter((node) => node.id === source);
             let { status } = sourceNode.data;
 
@@ -166,7 +154,10 @@ const useStore = create(
                                 ...node.data,
                                 sources: {
                                     ...node.data.sources,
-                                    [`${targetHandle}`]: status,
+                                    [`${targetHandle}`]: {
+                                        edges: 1,
+                                        status,
+                                    }
                                 }
                             }
                         }

@@ -5,7 +5,7 @@ import XorNode from './XorNode';
 import NandNode from './NandNode';
 import NorNode from './NorNode';
 
-export default {
+export const nodeTypes = {
     switch: SwitchNode,
     and: AndNode,
     or: OrNode,
@@ -26,7 +26,16 @@ export function defaultNode(nodeType) {
         default: return {
             type: nodeType,
             data: {
-                sources: { a: 'off', b: 'off' },
+                sources: {
+                    a: {
+                        edges: 0,
+                        status: 'off'
+                    },
+                    b: {
+                        edges: 0,
+                        status: 'off'
+                    }
+                },
                 status: 'off',
             }
         }

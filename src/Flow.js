@@ -1,4 +1,4 @@
-import { useCallback, useState, DragEvent } from 'react';
+import { useState } from 'react';
 import { useWindowSize } from '@react-hook/window-size';
 import ReactFlow, {
     MiniMap,
@@ -10,8 +10,8 @@ import useRfStore from './util/useRfStore';
 import 'reactflow/dist/style.css';
 import './overview.css';
 
-import nodeTypes, { defaultNode } from './nodes/nodeTypes';
-import edgeTypes from './edges/edgeTypes';
+import { nodeTypes, defaultNode } from './nodes/nodeTypes';
+import { edgeTypes } from './edges/edgeTypes';
 
 
 const onDragOver = (event) => {

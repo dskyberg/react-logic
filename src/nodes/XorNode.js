@@ -1,5 +1,5 @@
 
-import React, { useEffect, memo } from 'react';
+import React, { useEffect } from 'react';
 import ReactDOMServer from "react-dom/server";
 import useRfStore from '../util/useRfStore';
 
@@ -8,7 +8,7 @@ import { css } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { Handle, Position, useReactFlow, useStoreApi } from 'reactflow';
+import { Handle, Position } from 'reactflow';
 import TargetHandle from './TargetHandle';
 
 const Svg = ({ bg, size }) => {
@@ -27,15 +27,16 @@ const Svg = ({ bg, size }) => {
 export default function XorNode({ id, data }) {
     const theme = useTheme();
 
-    const { sources, status } = data;
+    const { status } = data;
     const { setNodeStatus } = useRfStore();
 
     useEffect(() => {
-        const status = ((sources.a === 'on' && sources.b === 'off') || (sources.a === 'off' && sources.b === 'on')) ? 'on' : 'off';
+        const { sources } = data
+        const status = ((sources.a.status === 'on' && sources.b.status === 'off') || (sources.a.status === 'off' && sources.b.status === 'on')) ? 'on' : 'off';
         if (status !== data.status) {
             setNodeStatus(id, status);
         }
-    }, [sources]);
+    }, [id, data, setNodeStatus]);
 
     // Create the SVG as a React component, with props, then
     // render it as a string.  This allows us to dynamically style

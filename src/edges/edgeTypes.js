@@ -1,11 +1,11 @@
-import ReactFlow, {
+import {
     BezierEdge,
     StraightEdge,
     StepEdge,
     SmoothStepEdge,
 } from 'reactflow';
 
-export default {
+export const edgeTypes = {
     default: StepEdge,
     bezier: BezierEdge,
     straight: StraightEdge,
