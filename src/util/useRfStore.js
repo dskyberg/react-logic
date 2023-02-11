@@ -50,15 +50,15 @@ const useStore = create(
 
         setNodeStatus: (id, status) => {
             let prev_status = status;
-            set({
-                nodes: Array.from(get().nodes.values()).map((node) => {
-                    if (node.id === id) {
-                        prev_status = node.data.status;
-                        node.data.status = status
-                    }
-                    return node;
-                }),
-            })
+            let nodes = get().nodes.map((node) => {
+                if (node.id === id) {
+                    prev_status = node.data.status;
+                    node.data.status = status
+                }
+                return node;
+            });
+
+            set({ nodes })
             // If the status actually changed, then update the connected nodes
             if (prev_status !== status) {
                 get().updateEdgeStatus(id, status);
@@ -86,27 +86,26 @@ const useStore = create(
         },
 
         onEdgesDelete: (changes) => {
-
-            set({
-                nodes: Array.from(get().nodes.values()).map((node) => {
-                    for (let e of changes) {
-                        if (node.id === e.target) {
-                            node.data = {
-                                ...node.data,
-                                sources: {
-                                    ...node.data.sources,
-                                    [e.targetHandle]: {
-                                        edges: node.data.sources[e.targetHandle].edges - 1,
-                                        status: 'off',
-                                    }
+            let nodes = get().nodes.map((node) => {
+                for (let e of changes) {
+                    if (node.id === e.target) {
+                        node.data = {
+                            ...node.data,
+                            sources: {
+                                ...node.data.sources,
+                                [e.targetHandle]: {
+                                    edges: node.data.sources[e.targetHandle].edges - 1,
+                                    status: 'off',
                                 }
                             }
                         }
                     }
-                    console.log('onEdgesDelete:', node);
-                    return node;
-                }),
-            })
+                }
+                console.log('onEdgesDelete:', node);
+                return node;
+            });
+
+            set({ nodes })
         },
 
         onConnect: (connection) => {
@@ -120,27 +119,26 @@ const useStore = create(
             // Get the set of nodes connect to this node (id)
 
             let egs = get().edges.filter((edge) => edge.source === id);
-
-            set({
-                nodes: Array.from(get().nodes.values()).map((node) => {
-                    for (let e of egs) {
-                        if (e.source === id && e.target === node.id) {
-                            // Found a connected node.
-                            node.data = {
-                                ...node.data,
-                                sources: {
-                                    ...node.data.sources,
-                                    [e.targetHandle]: {
-                                        edges: node.data.sources[e.targetHandle].edges,
-                                        status,
-                                    }
+            let nodes = get().nodes.map((node) => {
+                for (let e of egs) {
+                    if (e.source === id && e.target === node.id) {
+                        // Found a connected node.
+                        node.data = {
+                            ...node.data,
+                            sources: {
+                                ...node.data.sources,
+                                [e.targetHandle]: {
+                                    edges: node.data.sources[e.targetHandle].edges,
+                                    status,
                                 }
                             }
                         }
                     }
-                    return node;
-                }),
-            })
+                }
+                return node;
+            });
+
+            set({ nodes })
         },
 
         _updateStatusOnConnect: (connection) => {
@@ -149,24 +147,26 @@ const useStore = create(
             let { status } = sourceNode.data;
 
             let egs = get().edges.filter((edge) => edge.source === source);
-            set({
-                nodes: Array.from(get().nodes.values()).map((node) => {
-                    for (let e of egs) {
-                        if (e.target === node.id) {
-                            node.data = {
-                                ...node.data,
-                                sources: {
-                                    ...node.data.sources,
-                                    [targetHandle]: {
-                                        edges: node.data.sources[targetHandle].edges + 1,
-                                        status,
-                                    }
+            let nodes = get().nodes.map((node) => {
+                for (let e of egs) {
+                    if (e.target === node.id) {
+                        node.data = {
+                            ...node.data,
+                            sources: {
+                                ...node.data.sources,
+                                [targetHandle]: {
+                                    edges: node.data.sources[targetHandle].edges + 1,
+                                    status,
                                 }
                             }
                         }
                     }
-                    return node;
-                }),
+                }
+                return node;
+            });
+
+            set({
+                nodes: nodes,
             })
         },
 
