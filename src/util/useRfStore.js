@@ -161,8 +161,8 @@ const useStore = create(
                                 ...node.data,
                                 sources: {
                                     ...node.data.sources,
-                                    [`${targetHandle}`]: {
-                                        edges: node.data.sources[`${targetHandle}`].edges + 1,
+                                    [targetHandle]: {
+                                        edges: node.data.sources[targetHandle].edges + 1,
                                         status,
                                     }
                                 }
