@@ -75,6 +75,7 @@ export default function Flow() {
                 onDragOver={onDragOver}
                 onDrop={onDrop}
                 nodeOrigin={[0.5, 0.5]}
+                proOptions={{ hideAttribution: true }}
             >
                 <MiniMap style={{ height: 120 }} zoomable pannable />
                 <Background color="#aaa" gap={16} />

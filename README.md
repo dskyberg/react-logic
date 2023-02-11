@@ -12,6 +12,11 @@ You can view the truth tables that this app uses by clicking the button in the d
 
 <img src="doc/images/truth_tables.png" alt="Truth Tables" title="Truth Tables">
 
+## ReactFlow Attribution
+I have turned off the attribution link on the ReactFlow Background, because I'm giving
+attribution in this doc.  If you want to use this app for anything other than personal
+use, then please respect the [ReactFlow Attribution request](https://reactflow.dev/docs/guides/remove-attribution/)
+
 ## Coming Soon
 ### Edge Validation
 Currently, there is no edge validation.  There is rudimentary, buggy tracking for
