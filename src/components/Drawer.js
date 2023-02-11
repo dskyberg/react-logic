@@ -18,6 +18,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
+import Typography from '@mui/material/Typography';
 
 import { ReactComponent as AndSvg } from '../assets/and.svg';
 import { ReactComponent as NandSvg } from '../assets/nand.svg';
@@ -186,7 +187,10 @@ export default function Drawer() {
                     keepMounted
                     open={dialogOpen}
                     onClose={handleConfirm}
-                />
+                >
+                    <Typography>This will remove all your content.</Typography>
+                    <Typography>Are you sure?</Typography>
+                </ConfirmationDialog>
                 <TruthTableDialog
                     keepMounted
                     open={tableOpen}
