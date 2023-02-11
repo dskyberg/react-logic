@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import TargetHandle from './TargetHandle';
 import SourceHandle from './SourceHandle';
 
+import { xor_gate } from '../util/gates';
+
 const Svg = ({ bg, size }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -31,8 +33,7 @@ export default function XorNode({ id, data }) {
     const { setNodeStatus } = useRfStore();
 
     useEffect(() => {
-        const { sources } = data
-        const status = ((sources.a.status === 'on' && sources.b.status === 'off') || (sources.a.status === 'off' && sources.b.status === 'on')) ? 'on' : 'off';
+        const status = xor_gate(data.targets);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }

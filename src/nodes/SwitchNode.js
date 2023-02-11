@@ -47,7 +47,7 @@ export default function SwitchNode({ id, data }) {
 
         `}>
             <Switch size="small" checked={status === 'on'} onChange={handleClick} />
-            <SourceHandle id="a" style={{ right: -8 }} />
+            <SourceHandle id="c" style={{ right: -8 }} />
         </div>
     )
 }

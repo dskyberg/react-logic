@@ -30,8 +30,7 @@ export default function AndNode({ id, data }) {
     const { setNodeStatus } = useRfStore();
 
     useEffect(() => {
-        const { sources } = data;
-        const status = and_gate(sources);
+        const status = and_gate(data.targets);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }

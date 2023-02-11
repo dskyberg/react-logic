@@ -91,10 +91,10 @@ const useStore = create(
                     if (node.id === e.target) {
                         node.data = {
                             ...node.data,
-                            sources: {
-                                ...node.data.sources,
+                            targets: {
+                                ...node.data.targets,
                                 [e.targetHandle]: {
-                                    edges: node.data.sources[e.targetHandle].edges - 1,
+                                    edges: node.data.targets[e.targetHandle].edges - 1,
                                     status: 'off',
                                 }
                             }
@@ -125,10 +125,10 @@ const useStore = create(
                         // Found a connected node.
                         node.data = {
                             ...node.data,
-                            sources: {
-                                ...node.data.sources,
+                            targets: {
+                                ...node.data.targets,
                                 [e.targetHandle]: {
-                                    edges: node.data.sources[e.targetHandle].edges,
+                                    edges: node.data.targets[e.targetHandle].edges,
                                     status,
                                 }
                             }
@@ -152,10 +152,10 @@ const useStore = create(
                     if (e.target === node.id) {
                         node.data = {
                             ...node.data,
-                            sources: {
-                                ...node.data.sources,
+                            targets: {
+                                ...node.data.targets,
                                 [targetHandle]: {
-                                    edges: node.data.sources[targetHandle].edges + 1,
+                                    edges: node.data.targets[targetHandle].edges + 1,
                                     status,
                                 }
                             }
@@ -173,7 +173,7 @@ const useStore = create(
         validateConnection: (connection) => {
             //const s_node = get().nodes.filter((node) => node.id === connection.source)[0];
             const t_node = get().nodes.filter((node) => node.id === connection.target)[0];
-            return t_node.data.sources[connection.targetHandle].edges === 0;
+            return t_node.data.targets[connection.targetHandle].edges === 0;
         },
 
         reset: () => {

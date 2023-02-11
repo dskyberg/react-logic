@@ -32,8 +32,7 @@ export default function NandNode({ id, data }) {
     const { setNodeStatus } = useRfStore();
 
     useEffect(() => {
-        const { sources } = data;
-        const status = nand_gate(sources);
+        const status = nand_gate(data.targets);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }

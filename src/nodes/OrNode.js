@@ -29,10 +29,7 @@ export default function OrNode({ id, data }) {
     const { status } = data;
 
     useEffect(() => {
-        console.log('OrNode', id, data);
-        const { sources } = data;
-
-        const status = or_gate(sources);
+        const status = or_gate(data.targets);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }

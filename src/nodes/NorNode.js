@@ -11,6 +11,8 @@ import Typography from '@mui/material/Typography';
 import TargetHandle from './TargetHandle';
 import SourceHandle from './SourceHandle';
 
+import { nor_gate } from '../util/gates';
+
 const Svg = ({ bg }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -29,8 +31,7 @@ export default function NorNode({ id, data }) {
     const { setNodeStatus } = useRfStore();
 
     useEffect(() => {
-        const { sources } = data;
-        const status = (sources.a.status === 'off' || sources.b.status === 'off') ? 'on' : 'off';
+        const status = nor_gate(data.targets);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }

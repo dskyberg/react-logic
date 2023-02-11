@@ -26,7 +26,7 @@ export function defaultNode(nodeType) {
         default: return {
             type: nodeType,
             data: {
-                sources: {
+                targets: {
                     a: {
                         edges: 0,
                         status: 'off'
