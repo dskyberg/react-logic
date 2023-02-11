@@ -1,0 +1,11 @@
+<svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
+   <path fill="none" stroke="black" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4"
+        d="M 0,2 C 30,2 30,98  0,98"
+      />
+   <path fill="none" stroke="#000000" stroke-width="4" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="4"
+        d="M 15,2 C 45,0 45,100  15,98
+        C  70,98 80,98 98,50
+        C  80,2 70,2 15,2"
+      />
+
+</svg>
