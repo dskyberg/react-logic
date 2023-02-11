@@ -168,16 +168,16 @@ export default function Drawer() {
 
                 <List>
                     <ListItem disablePadding>
+                        <ListItemButton onClick={() => { setTableOpen(true) }}>
+                            <ListItemText>Truth Tabes</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
                         <ListItemButton onClick={handleReset}>
                             <ListItemIcon>
                                 <RestartAltIcon />
                             </ListItemIcon>
                             <ListItemText primary={'Reset'} />
-                        </ListItemButton>
-                    </ListItem>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => { setTableOpen(true) }}>
-                            <ListItemText>Truth Tabes</ListItemText>
                         </ListItemButton>
                     </ListItem>
                 </List>
