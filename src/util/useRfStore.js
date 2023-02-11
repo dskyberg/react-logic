@@ -170,6 +170,12 @@ const useStore = create(
             })
         },
 
+        validateConnection: (connection) => {
+            //const s_node = get().nodes.filter((node) => node.id === connection.source)[0];
+            const t_node = get().nodes.filter((node) => node.id === connection.target)[0];
+            return t_node.data.sources[connection.targetHandle].edges === 0;
+        },
+
         reset: () => {
             set(initialState);
         }

@@ -8,8 +8,8 @@ import { css } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { Handle, Position } from 'reactflow';
 import TargetHandle from './TargetHandle';
+import SourceHandle from './SourceHandle';
 
 const Svg = ({ bg }) => {
     return (
@@ -68,7 +68,7 @@ export default function NorNode({ id, data }) {
                 </div>
                 <TargetHandle handleId="b" style={{ left: -8, top: 10 }} />
             </ div>
-            <Handle type="source" position={Position.Right} style={{ right: -8 }} id="c" />
+            <SourceHandle style={{ right: -8 }} id="c" />
 
         </div >
     )

@@ -6,9 +6,8 @@ import useRfStore from '../util/useRfStore';
 import { css } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 
-import { Handle, Position } from 'reactflow';
-
 import TargetHandle from './TargetHandle';
+import SourceHandle from './SourceHandle';
 import { Typography } from '@mui/material';
 
 import { and_gate } from '../util/gates';
@@ -66,13 +65,12 @@ export default function AndNode({ id, data }) {
                     align-items: center;
                     justify-content: center;`
                 } >
-                    <Typography style={{ fontSize: '.6rem' }}>And</Typography>
+                    <Typography style={{ fontSize: '.6rem' }} >And</Typography>
                 </div>
 
                 <TargetHandle handleId="b" />
             </ div>
-            <Handle type="source" position={Position.Right} id="c" />
-
+            <SourceHandle id="c" />
         </div >
     )
 }

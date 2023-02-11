@@ -8,8 +8,8 @@ import { css } from '@emotion/react';
 import { useTheme } from '@mui/material/styles';
 import Typography from '@mui/material/Typography';
 
-import { Handle, Position } from 'reactflow';
 import TargetHandle from './TargetHandle';
+import SourceHandle from './SourceHandle';
 
 const Svg = ({ bg, size }) => {
     return (
@@ -70,7 +70,7 @@ export default function XorNode({ id, data }) {
                 </div>
                 <TargetHandle handleId="b" style={{ left: -8, top: 10 }} />
             </ div>
-            <Handle type="source" position={Position.Right} id="c" style={{ right: -8 }} />
+            <SourceHandle id="c" style={{ right: -8 }} />
 
         </div >
     )

@@ -3,11 +3,11 @@ import ReactDOMServer from "react-dom/server";
 import { css } from '@emotion/react';
 
 import { useTheme } from '@mui/material/styles';
-
-import { Handle, Position } from 'reactflow';
 import Switch from '@mui/material/Switch';
 
 import useRfStore from '../util/useRfStore';
+
+import SourceHandle from './SourceHandle';
 
 const Svg = ({ bg, size }) => {
     return (
@@ -47,7 +47,7 @@ export default function SwitchNode({ id, data }) {
 
         `}>
             <Switch size="small" checked={status === 'on'} onChange={handleClick} />
-            <Handle type="source" position={Position.Right} id="a" style={{ right: -8 }} />
+            <SourceHandle id="a" style={{ right: -8 }} />
         </div>
     )
 }
