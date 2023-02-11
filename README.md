@@ -19,5 +19,4 @@ use, then please respect the [ReactFlow Attribution request](https://reactflow.d
 
 ## Coming Soon
 ### Edge Validation
-Currently, there is no edge validation.  There is rudimentary, buggy tracking for
-whether or not a node has edges.  But adding multiple edges to a handle is not (yet) restricted.  So for now, respect the limit of no more than 1 edge per node handle (where the edges connect).
+Currently, target handles (on the left side of nodes) are tracked to ensure only one edge per handle is allowed.  However, source handles (on the right side) are not yet tracked.  It is possible to have multiple edges from a single source handle.  However, this will be fixed in a future upgrade.
