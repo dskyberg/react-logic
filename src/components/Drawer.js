@@ -28,6 +28,7 @@ import { ReactComponent as XorSvg } from '../assets/xor.svg';
 import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import ConfirmationDialog from './ConfirmationDialog';
+import TruthTableDialog from './TruthTableDialog';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -46,6 +47,7 @@ const onDragStart = (event, nodeType) => {
 export default function Drawer() {
     const { drawerOpen, toggleDrawerOpen } = useAppStore();
     const [dialogOpen, setDialogOpen] = useState(false);
+    const [tableOpen, setTableOpen] = useState(true);
     const { reset } = useRfStore();
 
     const handleReset = () => {
@@ -57,6 +59,10 @@ export default function Drawer() {
         if (value) {
             reset();
         }
+    }
+
+    const handleTable = () => {
+        setTableOpen(false)
     }
 
     return (
@@ -169,11 +175,22 @@ export default function Drawer() {
                             <ListItemText primary={'Reset'} />
                         </ListItemButton>
                     </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => { setTableOpen(true) }}>
+                            <ListItemText>Truth Tabes</ListItemText>
+                        </ListItemButton>
+                    </ListItem>
                 </List>
+
                 <ConfirmationDialog
                     keepMounted
                     open={dialogOpen}
                     onClose={handleConfirm}
+                />
+                <TruthTableDialog
+                    keepMounted
+                    open={tableOpen}
+                    onClose={handleTable}
                 />
 
             </MuiDrawer >

@@ -32,12 +32,12 @@ export default function AndNode({ id, data }) {
 
     useEffect(() => {
         const { sources } = data;
-
         const status = and_gate(sources);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }
     }, [id, data, setNodeStatus]);
+
     // Create the SVG as a React component, with props, then
     // render it as a string.  This allows us to dynamically style
     // the SVG, and still use it as a background image.

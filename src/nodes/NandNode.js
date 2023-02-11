@@ -11,6 +11,8 @@ import { Handle, Position } from 'reactflow';
 import TargetHandle from './TargetHandle';
 import { Typography } from '@mui/material';
 
+import { nand_gate } from '../util/gates';
+
 const Svg = ({ bg }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
@@ -32,11 +34,12 @@ export default function NandNode({ id, data }) {
 
     useEffect(() => {
         const { sources } = data;
-        const status = (sources.a.status === 'on' && sources.b.status === 'on') ? 'off' : 'on';
+        const status = nand_gate(sources);
         if (status !== data.status) {
             setNodeStatus(id, status);
         }
     }, [id, data, setNodeStatus]);
+
     // Create the SVG as a React component, with props, then
     // render it as a string.  This allows us to dynamically style
     // the SVG, and still use it as a background image.
