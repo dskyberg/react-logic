@@ -28,6 +28,11 @@ const initialState = {
     id: initialNodes.length + 1,
 };
 
+const deprecate_count = (val) => {
+    console.log('deprecate_count:', val);
+    return val > 0 ? val - 1 : 0
+};
+
 // this is our useStore hook that we can use in our components to get parts of the store and call actions
 const useStore = create(
     persist((set, get) => ({
@@ -85,6 +90,7 @@ const useStore = create(
         },
 
         onEdgesDelete: (changes) => {
+
             set({
                 nodes: Array.from(get().nodes.values()).map((node) => {
                     for (let e of changes) {
@@ -94,14 +100,14 @@ const useStore = create(
                                 sources: {
                                     ...node.data.sources,
                                     [e.targetHandle]: {
-                                        edges: 0,
+                                        edges: node.data.sources[e.targetHandle].edges - 1,
                                         status: 'off',
                                     }
                                 }
                             }
                         }
                     }
-
+                    console.log('onEdgesDelete:', node);
                     return node;
                 }),
             })
@@ -116,6 +122,7 @@ const useStore = create(
 
         updateEdgeStatus: (id, status) => {
             // Get the set of nodes connect to this node (id)
+
             let egs = get().edges.filter((edge) => edge.source === id);
 
             set({
@@ -128,7 +135,7 @@ const useStore = create(
                                 sources: {
                                     ...node.data.sources,
                                     [e.targetHandle]: {
-                                        edges: 1,
+                                        edges: node.data.sources[e.targetHandle].edges,
                                         status,
                                     }
                                 }
@@ -155,7 +162,7 @@ const useStore = create(
                                 sources: {
                                     ...node.data.sources,
                                     [`${targetHandle}`]: {
-                                        edges: 1,
+                                        edges: node.data.sources[`${targetHandle}`].edges + 1,
                                         status,
                                     }
                                 }
