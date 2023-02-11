@@ -15,4 +15,4 @@ You can view the truth tables that this app uses by clicking the button in the d
 ## Coming Soon
 ### Edge Validation
 Currently, there is no edge validation.  There is rudimentary, buggy tracking for
-whether or not a node has edges.  But adding multiple edges to a handle i not (yet) prohibited.  So for now, respect the limit of no more than 1 edge per node handle (where the edges connect).
+whether or not a node has edges.  But adding multiple edges to a handle is not (yet) restricted.  So for now, respect the limit of no more than 1 edge per node handle (where the edges connect).
