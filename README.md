@@ -18,5 +18,7 @@ attribution in this doc.  If you want to use this app for anything other than pe
 use, then please respect the [ReactFlow Attribution request](https://reactflow.dev/docs/guides/remove-attribution/)
 
 ## Coming Soon
-### Edge Validation
-Currently, target handles (on the left side of nodes) are tracked to ensure only one edge per handle is allowed.  However, source handles (on the right side) are not yet tracked.  It is possible to have multiple edges from a single source handle.  However, this will be fixed in a future upgrade.
+### Edge Styling for on vs off
+Currently, edges are only black.  I want to fix to align with theming.  So, you can set
+the color by setting a style tip on the edge data object.
+
