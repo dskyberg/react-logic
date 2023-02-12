@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
+import mergeDeep from './mergeDeep';
 
 import {
     addEdge,
@@ -15,6 +16,11 @@ const initialNodes = [
         position: { x: 10, y: 200 },
         data: {
             status: "off",
+            sources: {
+                c: {
+                    edges: 0
+                }
+            }
         }
     },
 ];
@@ -48,24 +54,6 @@ const useStore = create(
             set({ nodes: get().nodes.concat(newNode) })
         },
 
-        setNodeStatus: (id, status) => {
-            let prev_status = status;
-            let nodes = get().nodes.map((node) => {
-                if (node.id === id) {
-                    prev_status = node.data.status;
-                    node.data.status = status
-                }
-                return node;
-            });
-
-            set({ nodes })
-            // If the status actually changed, then update the connected nodes
-            if (prev_status !== status) {
-                get().updateEdgeStatus(id, status);
-            }
-        },
-
-
         onNodesChange: (changes) => {
             set({
                 nodes: applyNodeChanges(changes, get().nodes),
@@ -88,78 +76,54 @@ const useStore = create(
         onEdgesDelete: (changes) => {
             let nodes = get().nodes.map((node) => {
                 for (let e of changes) {
+                    if (node.id === e.source) {
+                        let data = { ...node.data };
+                        data.sources[e.sourceHandle].edges -= 1;
+                        node.data = data
+                    }
                     if (node.id === e.target) {
-                        node.data = {
-                            ...node.data,
-                            targets: {
-                                ...node.data.targets,
-                                [e.targetHandle]: {
-                                    edges: node.data.targets[e.targetHandle].edges - 1,
-                                    status: 'off',
-                                }
-                            }
-                        }
+                        let data = { ...node.data };
+                        data.targets[e.targetHandle].edges -= 1;
+                        node.data = data;
                     }
                 }
-                console.log('onEdgesDelete:', node);
                 return node;
             });
 
             set({ nodes })
         },
 
+        /**
+         *  onConnect performs 2 activities:
+         *  - Adds a new edge, as defined by `connection`
+         *  - Updates the source and target node data to reflect the connection
+         */
         onConnect: (connection) => {
+            // Add the edge
             set({
                 edges: addEdge(connection, get().edges),
             });
-            get()._updateStatusOnConnect(connection);
-        },
 
-        updateEdgeStatus: (id, status) => {
-            // Get the set of nodes connect to this node (id)
+            // Update the source and target node data to reflect the connection
+            let [sourceNode] = get().nodes.filter((node) => node.id === connection.source);
+            // let { status } = sourceNode.data;
 
-            let egs = get().edges.filter((edge) => edge.source === id);
+            let egs = get().edges.filter((edge) => edge.source === connection.source);
             let nodes = get().nodes.map((node) => {
                 for (let e of egs) {
-                    if (e.source === id && e.target === node.id) {
-                        // Found a connected node.
-                        node.data = {
-                            ...node.data,
-                            targets: {
-                                ...node.data.targets,
-                                [e.targetHandle]: {
-                                    edges: node.data.targets[e.targetHandle].edges,
-                                    status,
-                                }
-                            }
-                        }
+                    if (e.source === node.id) {
+                        // This is the soure node.  Update the sources in
+                        // the node data
+                        let data = { ...node.data };
+                        data.sources[connection.sourceHandle].edges += 1;
+                        node.data = data;
                     }
-                }
-                return node;
-            });
-
-            set({ nodes })
-        },
-
-        _updateStatusOnConnect: (connection) => {
-            const { source, targetHandle } = connection;
-            let [sourceNode] = get().nodes.filter((node) => node.id === source);
-            let { status } = sourceNode.data;
-
-            let egs = get().edges.filter((edge) => edge.source === source);
-            let nodes = get().nodes.map((node) => {
-                for (let e of egs) {
                     if (e.target === node.id) {
-                        node.data = {
-                            ...node.data,
-                            targets: {
-                                ...node.data.targets,
-                                [targetHandle]: {
-                                    edges: node.data.targets[targetHandle].edges + 1,
-                                    status,
-                                }
-                            }
-                        }
+                        // This is the target node.  Update the targets in
+                        // the node data
+                        let data = { ...node.data };
+                        data.targets[connection.targetHandle].edges += 1;
+                        node.data = data;
                     }
                 }
                 return node;
@@ -170,10 +134,62 @@ const useStore = create(
             })
         },
 
+        /**
+         * setNodeStatus is used by the custom nodes (AndNode, OrNode, etc)
+         * to update the  data.status flag.  This method calls the following
+         * `updateEdgeStatus` to cascade the status change to any connected
+         * node. That node, may then call `setNodeStatus`, to continue the
+         * chain of updates.
+         */
+        setNodeStatus: (id, status) => {
+            console.log('setNodeStatus:', id, status);
+            let nodes = get().nodes.map((node) => {
+                if (node.id === id) {
+                    node.data.status = status
+                    console.log('setNodeStatus:', node);
+                }
+                return node;
+            });
+
+            set({ nodes })
+            // Update the connected nodes
+            get().updateEdgeStatus(id, status);
+        },
+
+        /*
+         * Need to figure out how to abstract this
+         *
+         */
+        updateEdgeStatus: (id, status) => {
+            // Get the set of nodes connected to this node (id)
+            let egs = get().edges.filter((edge) => edge.source === id);
+            let nodes = get().nodes.map((node) => {
+                for (let e of egs) {
+                    if (e.source === id && e.target === node.id) {
+                        // Found a connected node.
+                        // In order to trigger React render, we need to change
+                        // the data reference.
+                        let data = { ...node.data }
+                        data.targets[e.targetHandle].status = status;
+                        node.data = data;
+                    }
+                }
+                return node;
+            });
+
+            set({ nodes })
+        },
+
+        /**
+         * Called when a connection is attempted.
+         * Ensures that neither the source handle nor the target handle
+         * already have a connected edge.
+         */
         validateConnection: (connection) => {
-            //const s_node = get().nodes.filter((node) => node.id === connection.source)[0];
+            const s_node = get().nodes.filter((node) => node.id === connection.source)[0];
             const t_node = get().nodes.filter((node) => node.id === connection.target)[0];
-            return t_node.data.targets[connection.targetHandle].edges === 0;
+            return t_node.data.targets[connection.targetHandle].edges === 0
+                && s_node.data.sources[connection.sourceHandle].edges === 0;
         },
 
         reset: () => {
