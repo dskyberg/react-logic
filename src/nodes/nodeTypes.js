@@ -21,11 +21,22 @@ export function defaultNode(nodeType) {
             type: nodeType,
             data: {
                 status: 'off',
+                sources: {
+                    c: {
+                        edges: 0,
+                    }
+                }
             }
         }
         default: return {
             type: nodeType,
             data: {
+                status: 'off',
+                sources: {
+                    c: {
+                        edges: 0,
+                    }
+                },
                 targets: {
                     a: {
                         edges: 0,
@@ -35,8 +46,7 @@ export function defaultNode(nodeType) {
                         edges: 0,
                         status: 'off'
                     }
-                },
-                status: 'off',
+                }
             }
         }
     }
