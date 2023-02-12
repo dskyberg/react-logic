@@ -68,6 +68,7 @@ const useStore = create(
         },
 
         onEdgeUpdate: (oldEdge, newConnection) => {
+            console.log('onEdgeUpdate');
             set({
                 edges: updateEdge(oldEdge, newConnection, get().edges),
             })
@@ -141,26 +142,39 @@ const useStore = create(
          * node. That node, may then call `setNodeStatus`, to continue the
          * chain of updates.
          */
-        setNodeStatus: (id, status) => {
-            console.log('setNodeStatus:', id, status);
+        setNodeStatus: (id, status, edgeStyle) => {
             let nodes = get().nodes.map((node) => {
                 if (node.id === id) {
                     node.data.status = status
-                    console.log('setNodeStatus:', node);
                 }
                 return node;
             });
 
             set({ nodes })
             // Update the connected nodes
-            get().updateEdgeStatus(id, status);
+            get()._cascadeEdgeStatus(id, status, edgeStyle);
+            get()._cascadeNodeStatus(id, status);
         },
 
-        /*
-         * Need to figure out how to abstract this
-         *
+        _cascadeEdgeStatus: (id, status, edgeStyle) => {
+            let edges = get().edges.map((edge) => {
+                if (edge.source === id) {
+                    edge = {
+                        ...edge,
+                        style: edgeStyle
+                    };
+                }
+                console.log('update this edge', edge);
+                return edge;
+            })
+            set((edges));
+        },
+
+        /**
+         * When a node status changes, cascade the changes down to
+         * other connected nodes.
          */
-        updateEdgeStatus: (id, status) => {
+        _cascadeNodeStatus: (id, status) => {
             // Get the set of nodes connected to this node (id)
             let egs = get().edges.filter((edge) => edge.source === id);
             let nodes = get().nodes.map((node) => {

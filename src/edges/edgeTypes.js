@@ -1,14 +1,10 @@
 import {
-    BezierEdge,
-    StraightEdge,
-    StepEdge,
+    //  BezierEdge,
+    //  StraightEdge,
+    //  StepEdge,
     SmoothStepEdge,
 } from 'reactflow';
 
 export const edgeTypes = {
-    default: StepEdge,
-    bezier: BezierEdge,
-    straight: StraightEdge,
-    step: StepEdge,
-    smoothstep: SmoothStepEdge,
+    default: SmoothStepEdge,
 };
