@@ -68,7 +68,6 @@ const useStore = create(
         },
 
         onEdgeUpdate: (oldEdge, newConnection) => {
-            console.log('onEdgeUpdate');
             set({
                 edges: updateEdge(oldEdge, newConnection, get().edges),
             })
@@ -142,7 +141,7 @@ const useStore = create(
          * node. That node, may then call `setNodeStatus`, to continue the
          * chain of updates.
          */
-        setNodeStatus: (id, status, edgeStyle) => {
+        setNodeStatus: (id, status, theme = { palette: { secondary: { light: 'black' } } }) => {
             let nodes = get().nodes.map((node) => {
                 if (node.id === id) {
                     node.data.status = status
@@ -152,11 +151,12 @@ const useStore = create(
 
             set({ nodes })
             // Update the connected nodes
-            get()._cascadeEdgeStatus(id, status, edgeStyle);
+            get()._cascadeEdgeStatus(id, status, theme);
             get()._cascadeNodeStatus(id, status);
         },
 
-        _cascadeEdgeStatus: (id, status, edgeStyle) => {
+        _cascadeEdgeStatus: (id, status, theme) => {
+            let edgeStyle = { stroke: status === 'on' ? theme.palette.secondary.light : 'black' };
             let edges = get().edges.map((edge) => {
                 if (edge.source === id) {
                     edge = {
@@ -164,10 +164,9 @@ const useStore = create(
                         style: edgeStyle
                     };
                 }
-                console.log('update this edge', edge);
                 return edge;
             })
-            set((edges));
+            set({ edges });
         },
 
         /**

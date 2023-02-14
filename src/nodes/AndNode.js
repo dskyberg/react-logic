@@ -32,7 +32,7 @@ export default function AndNode({ id, data }) {
     useEffect(() => {
         const status = and_gate(data.targets);
         if (status !== data.status) {
-            setNodeStatus(id, status);
+            setNodeStatus(id, status, theme);
         }
     }, [id, data, setNodeStatus]);
 
