@@ -17,8 +17,3 @@ I have turned off the attribution link on the ReactFlow Background, because I'm 
 attribution in this doc.  If you want to use this app for anything other than personal
 use, then please respect the [ReactFlow Attribution request](https://reactflow.dev/docs/guides/remove-attribution/)
 
-## Coming Soon
-### Edge Styling for on vs off
-Currently, edges are only black.  I want to fix to align with theming.  So, you can set
-the color by setting a style tip on the edge data object.
-
