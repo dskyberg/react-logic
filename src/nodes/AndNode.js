@@ -15,7 +15,7 @@ import { and_gate } from '../util/gates';
 const Svg = ({ bg }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <path fill={bg} stroke="black" strokeWidth="4"
+            <path fill={bg} stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="4"
                 d="M 2 2 L 50 2 A 30 30 1 1 1 50 98 L 2 98 Z"
             />
         </svg>
