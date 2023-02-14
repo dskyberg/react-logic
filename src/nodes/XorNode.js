@@ -16,7 +16,7 @@ import { xor_gate } from '../util/gates';
 const Svg = ({ bg, size }) => {
     return (
         <svg width="100%" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg">
-            <path fill={bg} stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="4"
+            <path fill='none' stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="4"
                 d="M 0,2 C 30,2 30,98  0,98"
             />
             <path fill={bg} stroke="black" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" strokeMiterlimit="4"
