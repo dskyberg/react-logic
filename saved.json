@@ -1,0 +1,264 @@
+{
+    "nodes": [
+        {
+            "id": "1",
+            "type": "switch",
+            "position": {
+                "x": -215.5,
+                "y": 56
+            },
+            "data": {
+                "status": "on",
+                "sources": {
+                    "c": {
+                        "edges": 1
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -215.5,
+                "y": 56
+            },
+            "dragging": false
+        },
+        {
+            "id": "2",
+            "position": {
+                "x": -215,
+                "y": 120.75
+            },
+            "type": "switch",
+            "data": {
+                "status": "off",
+                "sources": {
+                    "c": {
+                        "edges": 1
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -215,
+                "y": 120.75
+            },
+            "dragging": false
+        },
+        {
+            "id": "3",
+            "position": {
+                "x": -213.5,
+                "y": 184.25
+            },
+            "type": "switch",
+            "data": {
+                "status": "on",
+                "sources": {
+                    "c": {
+                        "edges": 1
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -213.5,
+                "y": 184.25
+            },
+            "dragging": false
+        },
+        {
+            "id": "4",
+            "position": {
+                "x": -213.5,
+                "y": 244.25
+            },
+            "type": "switch",
+            "data": {
+                "status": "off",
+                "sources": {
+                    "c": {
+                        "edges": 1
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": true,
+            "positionAbsolute": {
+                "x": -213.5,
+                "y": 244.25
+            },
+            "dragging": false
+        },
+        {
+            "id": "5",
+            "position": {
+                "x": -107.5,
+                "y": 87.25
+            },
+            "type": "and",
+            "data": {
+                "status": "off",
+                "sources": {
+                    "c": {
+                        "edges": 1
+                    }
+                },
+                "targets": {
+                    "a": {
+                        "edges": 1,
+                        "status": "on"
+                    },
+                    "b": {
+                        "edges": 1,
+                        "status": "off"
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": false,
+            "positionAbsolute": {
+                "x": -107.5,
+                "y": 87.25
+            },
+            "dragging": false
+        },
+        {
+            "id": "6",
+            "position": {
+                "x": 8.5,
+                "y": 131.75
+            },
+            "type": "or",
+            "data": {
+                "status": "on",
+                "sources": {
+                    "c": {
+                        "edges": 1
+                    }
+                },
+                "targets": {
+                    "a": {
+                        "edges": 1,
+                        "status": "off"
+                    },
+                    "b": {
+                        "edges": 1,
+                        "status": "on"
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 8.5,
+                "y": 131.75
+            },
+            "dragging": false
+        },
+        {
+            "id": "7",
+            "position": {
+                "x": 108,
+                "y": 201.25
+            },
+            "type": "xor",
+            "data": {
+                "status": "on",
+                "sources": {
+                    "c": {
+                        "edges": 0
+                    }
+                },
+                "targets": {
+                    "a": {
+                        "edges": 1,
+                        "status": "on"
+                    },
+                    "b": {
+                        "edges": 1,
+                        "status": "off"
+                    }
+                }
+            },
+            "width": 50,
+            "height": 50,
+            "selected": false,
+            "positionAbsolute": {
+                "x": 108,
+                "y": 201.25
+            },
+            "dragging": false
+        }
+    ],
+    "edges": [
+        {
+            "source": "1",
+            "sourceHandle": "c",
+            "target": "5",
+            "targetHandle": "a",
+            "id": "reactflow__edge-1c-5a",
+            "style": {
+                "stroke": "#ff7961"
+            }
+        },
+        {
+            "source": "2",
+            "sourceHandle": "c",
+            "target": "5",
+            "targetHandle": "b",
+            "id": "reactflow__edge-2c-5b",
+            "style": {
+                "stroke": "black"
+            }
+        },
+        {
+            "source": "5",
+            "sourceHandle": "c",
+            "target": "6",
+            "targetHandle": "a",
+            "id": "reactflow__edge-5c-6a",
+            "style": {
+                "stroke": "black"
+            }
+        },
+        {
+            "source": "3",
+            "sourceHandle": "c",
+            "target": "6",
+            "targetHandle": "b",
+            "id": "reactflow__edge-3c-6b",
+            "style": {
+                "stroke": "#ff7961"
+            }
+        },
+        {
+            "source": "6",
+            "sourceHandle": "c",
+            "target": "7",
+            "targetHandle": "a",
+            "id": "reactflow__edge-6c-7a",
+            "style": {
+                "stroke": "#ff7961"
+            }
+        },
+        {
+            "source": "4",
+            "sourceHandle": "c",
+            "target": "7",
+            "targetHandle": "b",
+            "id": "reactflow__edge-4c-7b",
+            "style": {
+                "stroke": "black"
+            }
+        }
+    ]
+}

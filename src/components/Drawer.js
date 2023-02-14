@@ -13,12 +13,16 @@ import MuiDrawer from '@mui/material/Drawer';
 import Divider from '@mui/material/Divider';
 import List from '@mui/material/List';
 import IconButton from '@mui/material/IconButton';
-import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+
+import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
+import TableRowsIcon from '@mui/icons-material/TableRows';
+import SaveIcon from '@mui/icons-material/Save';
+import FileOpenIcon from '@mui/icons-material/FileOpen';
 
 import { ReactComponent as AndSvg } from '../assets/and.svg';
 import { ReactComponent as NandSvg } from '../assets/nand.svg';
@@ -30,6 +34,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 
 import ConfirmationDialog from './ConfirmationDialog';
 import TruthTableDialog from './TruthTableDialog';
+import FileOpenDialog from './FileOpenDialog';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -49,7 +54,8 @@ export default function Drawer() {
     const { drawerOpen, toggleDrawerOpen } = useAppStore();
     const [dialogOpen, setDialogOpen] = useState(false);
     const [tableOpen, setTableOpen] = useState(false);
-    const { reset } = useRfStore();
+    const [openFileDialogOpen, setOpenFileDialogOpen] = useState(false);
+    const { reset, fromJson, toJson } = useRfStore();
 
     const handleReset = () => {
         setDialogOpen(true)
@@ -66,6 +72,21 @@ export default function Drawer() {
         setTableOpen(false)
     }
 
+
+    const handleFileOpen = (files) => {
+        console.log('opening file', files);
+        setOpenFileDialogOpen(false);
+        if (files !== undefined && files.length > 0) {
+            // The file is b64 encoded.  Decode it
+            const text = atob(files[0].path.split(',')[1]);
+            fromJson(text);
+        }
+    }
+
+    const handleFileSave = (fileName) => {
+        console.log('saving file:', toJson());
+    }
+
     return (
         <>
             <MuiDrawer
@@ -80,6 +101,31 @@ export default function Drawer() {
                     </IconButton>
                 </DrawerHeader>
                 <Divider />
+
+                <List>
+
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={() => { setOpenFileDialogOpen(true) }}>
+                            <ListItemIcon>
+                                <FileOpenIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Open File'} />
+                        </ListItemButton>
+                    </ListItem>
+
+                    <ListItem disablePadding>
+                        <ListItemButton onClick={handleFileSave}>
+                            <ListItemIcon>
+                                <SaveIcon />
+                            </ListItemIcon>
+                            <ListItemText primary={'Save As'} />
+                        </ListItemButton>
+                    </ListItem>
+
+                </List>
+
+                <Divider />
+
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton>
@@ -165,14 +211,19 @@ export default function Drawer() {
                         </ListItemButton>
                     </ListItem>
                 </List>
+
                 <Divider />
 
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton onClick={() => { setTableOpen(true) }}>
+                            <ListItemIcon>
+                                <TableRowsIcon />
+                            </ListItemIcon>
                             <ListItemText>Truth Tabes</ListItemText>
                         </ListItemButton>
                     </ListItem>
+
                     <ListItem disablePadding>
                         <ListItemButton onClick={handleReset}>
                             <ListItemIcon>
@@ -182,6 +233,7 @@ export default function Drawer() {
                         </ListItemButton>
                     </ListItem>
                 </List>
+
 
                 <ConfirmationDialog
                     keepMounted
@@ -195,6 +247,11 @@ export default function Drawer() {
                     keepMounted
                     open={tableOpen}
                     onClose={handleTable}
+                />
+                <FileOpenDialog
+                    keepMounted
+                    open={openFileDialogOpen}
+                    onClose={handleFileOpen}
                 />
 
             </MuiDrawer >

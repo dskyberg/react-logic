@@ -207,6 +207,33 @@ const useStore = create(
 
         reset: () => {
             set(initialState);
+        },
+
+        /**
+         * Save state from a json string
+         *
+         */
+        fromJson: (json) => {
+            let blob;
+            try {
+                blob = JSON.parse(json);
+            } catch (error) {
+                console.log('Failed to parse json');
+                return;
+            }
+            set({ nodes: blob.nodes, edges: blob.edges });
+        },
+
+        /**
+         * Save current state to json
+         */
+        toJson: () => {
+            const blob = {
+                nodes: get().nodes,
+                edges: get().edges
+            }
+            const json = JSON.stringify(blob, null, 4);
+            return json;
         }
     }),
         {
