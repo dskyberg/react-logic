@@ -22,7 +22,7 @@ export default function SwitchNode({ id, data }) {
     const { status } = data;
 
     const handleClick = () => {
-        setNodeStatus(id, status === 'on' ? 'off' : 'on', theme);
+        setNodeStatus(id, status === 'on' ? 'off' : 'on');
     }
 
     const bgColor = status === "off" ? 'none' : theme.palette.secondary.light;

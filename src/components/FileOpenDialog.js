@@ -13,10 +13,6 @@ export default function FileOpenDialog({ open, onClose, ...other }) {
         onClose(files);
     }
 
-    const handleContext = (context) => {
-        console.log('handleContext:', context);
-    }
-
     return (
         <Dialog open={open} {...other}>
             <DialogTitle>Open a saved file</DialogTitle>
@@ -25,7 +21,6 @@ export default function FileOpenDialog({ open, onClose, ...other }) {
                     getBase64
                     multiFile={false}
                     onFilesChange={handleFileChange}
-                    onContextReady={handleContext}
                 />
 
             </DialogContent>

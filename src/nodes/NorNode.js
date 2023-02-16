@@ -33,7 +33,7 @@ export default function NorNode({ id, data }) {
     useEffect(() => {
         const status = nor_gate(data.targets);
         if (status !== data.status) {
-            setNodeStatus(id, status, theme);
+            setNodeStatus(id, status);
         }
     }, [id, data, setNodeStatus]);
 

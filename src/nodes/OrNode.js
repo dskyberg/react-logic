@@ -31,7 +31,7 @@ export default function OrNode({ id, data }) {
     useEffect(() => {
         const status = or_gate(data.targets);
         if (status !== data.status) {
-            setNodeStatus(id, status, theme);
+            setNodeStatus(id, status);
         }
     }, [id, data, setNodeStatus]);
 

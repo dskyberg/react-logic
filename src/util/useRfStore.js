@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware'
-import mergeDeep from './mergeDeep';
+import theme from '../theme';
 
 import {
     addEdge,
@@ -99,26 +99,26 @@ const useStore = create(
          *  - Updates the source and target node data to reflect the connection
          */
         onConnect: (connection) => {
-            // Add the edge
+            // Add the edge now, or else it won't show up in the following searches.
             set({
-                edges: addEdge(connection, get().edges),
-            });
+                edges: addEdge(connection, get().edges)
+            })
 
             // Update the source and target node data to reflect the connection
             let [sourceNode] = get().nodes.filter((node) => node.id === connection.source);
-            // let { status } = sourceNode.data;
 
-            let egs = get().edges.filter((edge) => edge.source === connection.source);
+            // Update the source and edge node data, to show the connections.
+            let connected_edges = get().edges.filter((edge) => edge.source === connection.source);
             let nodes = get().nodes.map((node) => {
-                for (let e of egs) {
-                    if (e.source === node.id) {
+                for (let edge of connected_edges) {
+                    if (edge.source === node.id) {
                         // This is the soure node.  Update the sources in
                         // the node data
                         let data = { ...node.data };
                         data.sources[connection.sourceHandle].edges += 1;
                         node.data = data;
                     }
-                    if (e.target === node.id) {
+                    if (edge.target === node.id) {
                         // This is the target node.  Update the targets in
                         // the node data
                         let data = { ...node.data };
@@ -130,8 +130,12 @@ const useStore = create(
             });
 
             set({
-                nodes: nodes,
+                nodes,
             })
+
+            // Update the status of the connected nodes
+            get()._cascadeEdgeStatus(sourceNode.id, sourceNode.data.status);
+            get()._cascadeNodeStatus(sourceNode.id, sourceNode.data.status);
         },
 
         /**
@@ -141,7 +145,7 @@ const useStore = create(
          * node. That node, may then call `setNodeStatus`, to continue the
          * chain of updates.
          */
-        setNodeStatus: (id, status, theme = { palette: { secondary: { light: 'black' } } }) => {
+        setNodeStatus: (id, status) => {
             let nodes = get().nodes.map((node) => {
                 if (node.id === id) {
                     node.data.status = status
@@ -151,11 +155,11 @@ const useStore = create(
 
             set({ nodes })
             // Update the connected nodes
-            get()._cascadeEdgeStatus(id, status, theme);
+            get()._cascadeEdgeStatus(id, status);
             get()._cascadeNodeStatus(id, status);
         },
 
-        _cascadeEdgeStatus: (id, status, theme) => {
+        _cascadeEdgeStatus: (id, status) => {
             let edgeStyle = { stroke: status === 'on' ? theme.palette.secondary.light : 'black' };
             let edges = get().edges.map((edge) => {
                 if (edge.source === id) {

@@ -35,7 +35,7 @@ export default function XorNode({ id, data }) {
     useEffect(() => {
         const status = xor_gate(data.targets);
         if (status !== data.status) {
-            setNodeStatus(id, status, theme);
+            setNodeStatus(id, status);
         }
     }, [id, data, setNodeStatus]);
 

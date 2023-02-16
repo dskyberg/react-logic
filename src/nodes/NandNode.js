@@ -34,7 +34,7 @@ export default function NandNode({ id, data }) {
     useEffect(() => {
         const status = nand_gate(data.targets);
         if (status !== data.status) {
-            setNodeStatus(id, status, theme);
+            setNodeStatus(id, status);
         }
     }, [id, data, setNodeStatus]);
 

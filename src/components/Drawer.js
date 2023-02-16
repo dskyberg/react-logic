@@ -74,7 +74,6 @@ export default function Drawer() {
 
 
     const handleFileOpen = (files) => {
-        console.log('opening file', files);
         setOpenFileDialogOpen(false);
         if (files !== undefined && files.length > 0) {
             // The file is b64 encoded.  Decode it
