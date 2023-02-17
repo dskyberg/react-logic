@@ -46,10 +46,6 @@ const DrawerHeader = styled('div')(({ theme }) => ({
     justifyContent: 'flex-end',
 }));
 
-const onDragStart = (event, nodeType) => {
-    event.dataTransfer.setData('application/reactflow', nodeType);
-    event.dataTransfer.effectAllowed = 'move';
-};
 
 export default function Drawer() {
     const { drawerOpen, toggleDrawerOpen } = useAppStore();
@@ -57,6 +53,11 @@ export default function Drawer() {
     const [tableOpen, setTableOpen] = useState(false);
     const [openFileDialogOpen, setOpenFileDialogOpen] = useState(false);
     const { reset, fromJson, toJson } = useRfStore();
+
+    const onDragStart = (event, nodeType) => {
+        event.dataTransfer.setData('application/reactflow', nodeType);
+        event.dataTransfer.effectAllowed = 'move';
+    };
 
     const handleReset = () => {
         setDialogOpen(true)
@@ -88,6 +89,7 @@ export default function Drawer() {
         const text = toJson();
         saveLocalFile(text, defaultFileName)
     }
+
 
     return (
         <>
@@ -131,13 +133,12 @@ export default function Drawer() {
                 <List>
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon
-                                onDragStart={(event) => onDragStart(event, 'switch')}
-                                draggable
-                            >
-                                <CircleSvg
-                                    style={{ width: 30 }} bg="white"
-                                />
+                            <ListItemIcon>
+                                <div draggable onDragStart={(event) => onDragStart(event, 'switch')}>
+                                    <CircleSvg
+                                        style={{ width: 30 }} />
+
+                                </div>
                             </ListItemIcon>
                             <ListItemText primary={'Switch'} />
                         </ListItemButton>
@@ -145,13 +146,10 @@ export default function Drawer() {
 
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon
-                                onDragStart={(event) => onDragStart(event, 'and')}
-                                draggable
-                            >
-                                <AndSvg
-                                    style={{ width: 30 }} bg="white"
-                                />
+                            <ListItemIcon>
+                                <div draggable onDragStart={(event) => onDragStart(event, 'and')}>
+                                    <AndSvg style={{ width: 30 }} />
+                                </div>
                             </ListItemIcon>
                             <ListItemText primary={'And'} />
                         </ListItemButton>
@@ -159,13 +157,10 @@ export default function Drawer() {
 
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon
-                                onDragStart={(event) => onDragStart(event, 'nand')}
-                                draggable
-                            >
-                                <NandSvg
-                                    style={{ width: 30 }} bg="white"
-                                />
+                            <ListItemIcon>
+                                <div draggable onDragStart={(event) => onDragStart(event, 'nand')}>
+                                    <NandSvg style={{ width: 30 }} />
+                                </div>
                             </ListItemIcon>
                             <ListItemText primary={'Nand'} />
                         </ListItemButton>
@@ -173,13 +168,10 @@ export default function Drawer() {
 
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon
-                                onDragStart={(event) => onDragStart(event, 'or')}
-                                draggable
-                            >
-                                <OrSvg
-                                    style={{ width: 30 }} bg="white"
-                                />
+                            <ListItemIcon>
+                                <div draggable onDragStart={(event) => onDragStart(event, 'or')}>
+                                    <OrSvg style={{ width: 30 }} />
+                                </div>
                             </ListItemIcon>
                             <ListItemText primary={'Or'} />
                         </ListItemButton>
@@ -187,13 +179,10 @@ export default function Drawer() {
 
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon
-                                onDragStart={(event) => onDragStart(event, 'nor')}
-                                draggable
-                            >
-                                <NorSvg
-                                    style={{ width: 30 }} bg="white"
-                                />
+                            <ListItemIcon>
+                                <div draggable onDragStart={(event) => onDragStart(event, 'nor')}>
+                                    <NorSvg style={{ width: 30 }} />
+                                </div>
                             </ListItemIcon>
                             <ListItemText primary={'Nor'} />
                         </ListItemButton>
@@ -201,13 +190,10 @@ export default function Drawer() {
 
                     <ListItem disablePadding>
                         <ListItemButton>
-                            <ListItemIcon
-                                onDragStart={(event) => onDragStart(event, 'xor')}
-                                draggable
-                            >
-                                <XorSvg
-                                    style={{ width: 30 }} bg="white"
-                                />
+                            <ListItemIcon>
+                                <div draggable onDragStart={(event) => onDragStart(event, 'xor')}>
+                                    <XorSvg style={{ width: 30 }} />
+                                </div>
                             </ListItemIcon>
                             <ListItemText primary={'Xor'} />
                         </ListItemButton>
