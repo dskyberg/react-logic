@@ -5,6 +5,8 @@ This app is built with React, Material-ui, and ReactFlow.  Just drag gates from
 the Drawer onto the board, and connect them.  Switches provide a toggle to turn
 them on and off.
 
+You can save the graph to a json file, and open saved graphs.
+
 <img src="doc/images/screen.png" alt="Screen" title="Screen shot">
 
 ## Truth Tables
