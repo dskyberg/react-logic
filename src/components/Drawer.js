@@ -35,6 +35,7 @@ import RestartAltIcon from '@mui/icons-material/RestartAlt';
 import ConfirmationDialog from './ConfirmationDialog';
 import TruthTableDialog from './TruthTableDialog';
 import FileOpenDialog from './FileOpenDialog';
+import saveLocalFile from '../util/saveLocalFile';
 
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
@@ -82,8 +83,10 @@ export default function Drawer() {
         }
     }
 
-    const handleFileSave = (fileName) => {
-        console.log('saving file:', toJson());
+    const handleFileSave = () => {
+        const defaultFileName = 'react-logic-state.json';
+        const text = toJson();
+        saveFile(text, defaultFileName)
     }
 
     return (
