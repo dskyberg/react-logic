@@ -86,7 +86,7 @@ export default function Drawer() {
     const handleFileSave = () => {
         const defaultFileName = 'react-logic-state.json';
         const text = toJson();
-        saveFile(text, defaultFileName)
+        saveLocalFile(text, defaultFileName)
     }
 
     return (
