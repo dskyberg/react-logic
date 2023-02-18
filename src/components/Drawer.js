@@ -37,6 +37,8 @@ import TruthTableDialog from './TruthTableDialog';
 import FileOpenDialog from './FileOpenDialog';
 import saveLocalFile from '../util/saveLocalFile';
 
+import Draggable from 'react-draggable';
+
 const DrawerHeader = styled('div')(({ theme }) => ({
     display: 'flex',
     alignItems: 'center',
@@ -55,6 +57,7 @@ export default function Drawer() {
     const { reset, fromJson, toJson } = useRfStore();
 
     const onDragStart = (event, nodeType) => {
+        console.log({ event, nodeType })
         event.dataTransfer.setData('application/reactflow', nodeType);
         event.dataTransfer.effectAllowed = 'move';
     };
