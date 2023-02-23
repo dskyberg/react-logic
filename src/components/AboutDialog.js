@@ -7,6 +7,7 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import Dialog from '@mui/material/Dialog';
+import Divider from '@mui/material/Divider';
 
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -39,6 +40,10 @@ export default function AboutDialog(props) {
                 <Typography variant="h6">Logic Board</Typography>
                 <Typography>From the mind of the mutt himself.</Typography>
                 <Typography>Drag gates from the drawer and drop them on the board.  Connect the dot, and throw the switches.  Watch stuff light up!</Typography>
+            </DialogContent>
+            <Divider />
+            <DialogContent>
+                <Typography>Copyright &copy; 2023 by David Skyberg</Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={handleOk}>Close</Button>
