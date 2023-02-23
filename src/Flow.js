@@ -6,6 +6,7 @@ import ReactFlow, {
 } from 'reactflow';
 
 import useRfStore from './util/useRfStore';
+import useAppStore from './util/useAppStore';
 
 import 'reactflow/dist/style.css';
 import './overview.css';
@@ -21,6 +22,8 @@ const onDragOver = (event) => {
 
 export default function Flow() {
     const [reactFlowInstance, setReactFlowInstance] = useState();
+    const { mapOpen } = useAppStore();
+
     const nodes = useRfStore((state) => state.nodes);
     const edges = useRfStore((state) => state.edges);
     const {
@@ -77,7 +80,9 @@ export default function Flow() {
                 nodeOrigin={[0.5, 0.5]}
                 proOptions={{ hideAttribution: true }}
             >
-                <MiniMap style={{ height: 120 }} zoomable pannable />
+                {mapOpen &&
+                    <MiniMap style={{ height: 120 }} zoomable pannable />
+                }
                 <Background color="#aaa" gap={16} />
             </ReactFlow>
         </div >
