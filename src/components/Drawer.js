@@ -18,6 +18,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Typography from '@mui/material/Typography';
+import Tooltip from '@mui/material/Tooltip';
 
 import ChevronLeftIcon from '@mui/icons-material/ChevronLeft';
 import TableRowsIcon from '@mui/icons-material/TableRows';
@@ -110,119 +111,137 @@ export default function Drawer() {
                 <Divider />
 
                 <List>
+                    <Tooltip title="Import a grap from a file">
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => { setOpenFileDialogOpen(true) }}>
+                                <ListItemIcon>
+                                    <FileOpenIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Open File'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
 
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => { setOpenFileDialogOpen(true) }}>
-                            <ListItemIcon>
-                                <FileOpenIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'Open File'} />
-                        </ListItemButton>
-                    </ListItem>
-
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={handleFileSave}>
-                            <ListItemIcon>
-                                <SaveIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'Save As'} />
-                        </ListItemButton>
-                    </ListItem>
-
+                    <Tooltip title="Save the graph to a file">
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={handleFileSave}>
+                                <ListItemIcon>
+                                    <SaveIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Save As'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
                 </List>
 
                 <Divider />
 
                 <List>
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <div draggable onDragStart={(event) => onDragStart(event, 'switch')}>
-                                    <CircleSvg
-                                        style={{ width: 30 }} />
+                    <Tooltip title="Drag a switch onto the board, and then toggle it on and off">
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <div draggable onDragStart={(event) => onDragStart(event, 'switch')}>
+                                        <CircleSvg
+                                            style={{ width: 30 }} />
 
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText primary={'Switch'} />
-                        </ListItemButton>
-                    </ListItem>
+                                    </div>
+                                </ListItemIcon>
+                                <ListItemText primary={'Switch'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
+                    <Tooltip title="Drag an 'and' gate onto the board">
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <div draggable onDragStart={(event) => onDragStart(event, 'and')}>
+                                        <AndSvg style={{ width: 30 }} />
+                                    </div>
+                                </ListItemIcon>
+                                <ListItemText primary={'And'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
 
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <div draggable onDragStart={(event) => onDragStart(event, 'and')}>
-                                    <AndSvg style={{ width: 30 }} />
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText primary={'And'} />
-                        </ListItemButton>
-                    </ListItem>
+                    <Tooltip title="Drag a 'nand' gate onto the board">
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <div draggable onDragStart={(event) => onDragStart(event, 'nand')}>
+                                        <NandSvg style={{ width: 30 }} />
+                                    </div>
+                                </ListItemIcon>
+                                <ListItemText primary={'Nand'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
 
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <div draggable onDragStart={(event) => onDragStart(event, 'nand')}>
-                                    <NandSvg style={{ width: 30 }} />
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText primary={'Nand'} />
-                        </ListItemButton>
-                    </ListItem>
+                    <Tooltip title="Drag an 'or' gate onto the board">
 
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <div draggable onDragStart={(event) => onDragStart(event, 'or')}>
-                                    <OrSvg style={{ width: 30 }} />
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText primary={'Or'} />
-                        </ListItemButton>
-                    </ListItem>
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <div draggable onDragStart={(event) => onDragStart(event, 'or')}>
+                                        <OrSvg style={{ width: 30 }} />
+                                    </div>
+                                </ListItemIcon>
+                                <ListItemText primary={'Or'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
 
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <div draggable onDragStart={(event) => onDragStart(event, 'nor')}>
-                                    <NorSvg style={{ width: 30 }} />
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText primary={'Nor'} />
-                        </ListItemButton>
-                    </ListItem>
+                    <Tooltip title="Drag a 'nor' gate onto the board">
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <div draggable onDragStart={(event) => onDragStart(event, 'nor')}>
+                                        <NorSvg style={{ width: 30 }} />
+                                    </div>
+                                </ListItemIcon>
+                                <ListItemText primary={'Nor'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
 
-                    <ListItem disablePadding>
-                        <ListItemButton>
-                            <ListItemIcon>
-                                <div draggable onDragStart={(event) => onDragStart(event, 'xor')}>
-                                    <XorSvg style={{ width: 30 }} />
-                                </div>
-                            </ListItemIcon>
-                            <ListItemText primary={'Xor'} />
-                        </ListItemButton>
-                    </ListItem>
+                    <Tooltip title="Drag an 'xor' gate onto the board">
+                        <ListItem disablePadding>
+                            <ListItemButton>
+                                <ListItemIcon>
+                                    <div draggable onDragStart={(event) => onDragStart(event, 'xor')}>
+                                        <XorSvg style={{ width: 30 }} />
+                                    </div>
+                                </ListItemIcon>
+                                <ListItemText primary={'Xor'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
                 </List>
 
                 <Divider />
 
                 <List>
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={() => { setTableOpen(true) }}>
-                            <ListItemIcon>
-                                <TableRowsIcon />
-                            </ListItemIcon>
-                            <ListItemText>Truth Tabes</ListItemText>
-                        </ListItemButton>
-                    </ListItem>
+                    <Tooltip title="Display the truth tables in a popup.">
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={() => { setTableOpen(true) }}>
+                                <ListItemIcon>
+                                    <TableRowsIcon />
+                                </ListItemIcon>
+                                <ListItemText>Truth Tabes</ListItemText>
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
 
-                    <ListItem disablePadding>
-                        <ListItemButton onClick={handleReset}>
-                            <ListItemIcon>
-                                <RestartAltIcon />
-                            </ListItemIcon>
-                            <ListItemText primary={'Reset'} />
-                        </ListItemButton>
-                    </ListItem>
+                    <Tooltip title="Completely reset the board">
+                        <ListItem disablePadding>
+                            <ListItemButton onClick={handleReset}>
+                                <ListItemIcon>
+                                    <RestartAltIcon />
+                                </ListItemIcon>
+                                <ListItemText primary={'Reset'} />
+                            </ListItemButton>
+                        </ListItem>
+                    </Tooltip>
                 </List>
 
 
